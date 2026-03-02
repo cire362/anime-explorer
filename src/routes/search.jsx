@@ -5,5 +5,10 @@ export const Route = createFileRoute('/search')({
 })
 
 function Search() {
-  return <div>Hello from Search!</div>
+  return (
+    <section className="placeholder-page">
+      <h1 className="page-title">Поиск</h1>
+      <p className="page-subtitle">Страница поиска скоро будет дополнена расширенными фильтрами и рекомендациями.</p>
+    </section>
+  )
 }

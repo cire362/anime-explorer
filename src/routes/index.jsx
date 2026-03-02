@@ -1,59 +1,95 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
-import { getTopAnime } from '../api/getTopAnime'
-import { AnimeCard } from '../components/animeCard'
+import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { getTopAnime } from "../api/getTopAnime";
+import { getAnimeById } from "../api/getAnimeById";
+import { AnimeCard } from "../components/animeCard";
+import Modal from "../components/Modal";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Index,
-})
+});
 
 function Index() {
-    const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
+  const [animeId, setAnimeId] = useState();
+  const [showModal, setModal] = useState(false);
 
-    const {isPending, error, data} = useQuery({
-        queryKey: [`animeData-${page}}`],
-        queryFn: () => getTopAnime(page)
-    })
+  const { isPending, error, data } = useQuery({
+    queryKey: [`animeData`, page],
+    queryFn: () => getTopAnime(page),
+  });
 
-    if (isPending) {
-        return <span>Загрузка...</span>
-    };
+  const {
+    isPending: isLoadingAnimeById,
+    data: animeByIdData,
+    isFetched,
+  } = useQuery({
+    queryKey: ["animeId", animeId],
+    queryFn: () => getAnimeById(animeId),
+    enabled: !!showModal,
+  });
 
-    if (error) {
-        return <span>Ошибка: {error.message}</span>
-    }
+  if (isPending) {
+    return <div className="state-message">Загрузка...</div>;
+  }
 
-    const topAnime = data.data
+  if (error) {
+    return <div className="state-message error">Ошибка: {error.message}</div>;
+  }
+
+  let animeById;
+
+  if (isFetched) {
+    animeById = animeByIdData;
+  }
+
+  const topAnime = data.data;
 
   return (
-   <div style={{
-    padding: "0 50px 30px"
-   }}>
-    <h1>Лучшие аниме за все время</h1>
-   
-    <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: "50px"
-    }}>
-        {topAnime.map((anime) => (
-            <AnimeCard style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "300px",
-            }} key={anime.mal_id} anime={anime}/>
-        ))}
-    </div>
+    <div>
+      <h1 className="page-title">Лучшие аниме за всё время</h1>
+      <p className="page-subtitle">
+        Подборка тайтлов с высоким рейтингом и лучшими отзывами зрителей.
+      </p>
 
-    <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-    }}>
-         <button disabled={page == 1} onClick={() => setPage(page - 1)}>Назад</button>
-        <button onClick={() => setPage(page + 1)}>Вперед</button>
+      <div className="anime-grid">
+        {topAnime.map((anime) => (
+          <AnimeCard
+            func={() => {
+              setModal(true);
+              setAnimeId(anime.mal_id);
+            }}
+            key={anime.mal_id}
+            anime={anime}
+          />
+        ))}
+      </div>
+
+      <div className="pagination">
+        <button
+          className="btn"
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Назад
+        </button>
+        <button className="btn" onClick={() => setPage(page + 1)}>
+          Вперёд
+        </button>
+      </div>
+
+      {showModal && (
+        <Modal
+          func={(e) => {
+            if (e.target.className == "modal-overlay") {
+              setModal(false);
+            }
+          }}
+        >
+          <h1>Модальное окно</h1>
+        </Modal>
+      )}
     </div>
-   </div>
-  )
+  );
 }
