@@ -24,6 +24,7 @@ function Index() {
     isPending: isLoadingAnimeById,
     data: animeByIdData,
     isFetched,
+    error: fetchTrailerError,
   } = useQuery({
     queryKey: ["animeId", animeId],
     queryFn: () => getAnimeById(animeId),
@@ -87,7 +88,23 @@ function Index() {
             }
           }}
         >
-          <h1>Модальное окно</h1>
+          {isLoadingAnimeById ? (
+            <div>Загрузка трейлера</div>
+          ) : fetchTrailerError ? (
+            <div>Ошибка загрузки трейлера: {fetchTrailerError}</div>
+          ) : (
+            <div>
+              <h1>Трейлер</h1>
+              <iframe
+                src={animeById.data.trailer.embed_url}
+                width="100%"
+                height="400px"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
         </Modal>
       )}
     </div>

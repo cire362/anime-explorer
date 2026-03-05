@@ -1,6 +1,6 @@
 export function AnimeCard({ anime, func }) {
   return (
-    <article onClick={() => func()} className="anime-card">
+    <article className="anime-card">
       <img src={anime.images.jpg.large_image_url} alt={anime.title} />
 
       <div className="anime-card__body">
@@ -18,6 +18,8 @@ export function AnimeCard({ anime, func }) {
             {anime.scored_by}
           </p>
         </div>
+
+        <button className="button" onClick={() => func()}>Посмотреть трейлер</button>
       </div>
     </article>
   );
