@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import "../styles/modal.css";
 
 export default function Modal({ children, func }) {
   const elRef = useRef(null);
@@ -17,7 +18,7 @@ export default function Modal({ children, func }) {
 
   return createPortal(
     <div onClick={(e) => func(e)} className="modal-overlay">
-      <div className="modal-content">{children}</div>
+      <div className="modal">{children}</div>
     </div>,
     elRef.current,
   );

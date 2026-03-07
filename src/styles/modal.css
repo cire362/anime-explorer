@@ -1,0 +1,143 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(9, 15, 31, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(4, 10, 24, 0.55);
+  padding: 1.4rem;
+  width: min(960px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  position: relative;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(122, 167, 255, 0.12),
+      transparent 28%
+    ),
+    linear-gradient(180deg, rgba(17, 27, 56, 0.98), rgba(12, 21, 44, 0.98));
+  animation: modalFadeIn 0.22s cubic-bezier(0.4, 0.8, 0.4, 1);
+}
+
+.trailer-modal {
+  display: grid;
+  gap: 18px;
+}
+
+.trailer-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 4px 0;
+}
+
+.trailer-modal__eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.trailer-modal__title {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.trailer-modal__video-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(122, 167, 255, 0.18);
+  background: linear-gradient(
+    180deg,
+    rgba(11, 20, 44, 0.95),
+    rgba(8, 14, 31, 0.98)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.trailer-modal__video-frame::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%;
+}
+
+.trailer-modal__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.trailer-modal__state {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  border: 1px solid rgba(122, 167, 255, 0.16);
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 29, 62, 0.96),
+    rgba(11, 20, 44, 0.98)
+  );
+  color: var(--muted);
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.trailer-modal__state--error {
+  color: #ffb6b6;
+  border-color: rgba(255, 120, 120, 0.28);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 14px;
+  }
+
+  .modal {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .trailer-modal {
+    gap: 14px;
+  }
+
+  .trailer-modal__state {
+    min-height: 220px;
+    font-size: 0.98rem;
+  }
+}

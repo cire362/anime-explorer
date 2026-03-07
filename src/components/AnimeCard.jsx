@@ -19,7 +19,17 @@ export function AnimeCard({ anime, func }) {
           </p>
         </div>
 
-        <button className="button" onClick={() => func()}>Посмотреть трейлер</button>
+        {func ? (
+          <button
+            className="button"
+            onClick={(e) => {
+              e.preventDefault();
+              func();
+            }}
+          >
+            Посмотреть трейлер
+          </button>
+        ) : null}
       </div>
     </article>
   );

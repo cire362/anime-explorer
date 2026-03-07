@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnimeAnimeidRouteImport } from './routes/anime.$animeid'
 
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnimeAnimeidRoute = AnimeAnimeidRouteImport.update({
+  id: '/anime/$animeid',
+  path: '/anime/$animeid',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/anime/$animeid': typeof AnimeAnimeidRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/anime/$animeid': typeof AnimeAnimeidRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
   '/search': typeof SearchRoute
+  '/anime/$animeid': typeof AnimeAnimeidRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/profile' | '/search'
+  fullPaths: '/' | '/profile' | '/search' | '/anime/$animeid'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile' | '/search'
-  id: '__root__' | '/' | '/profile' | '/search'
+  to: '/' | '/profile' | '/search' | '/anime/$animeid'
+  id: '__root__' | '/' | '/profile' | '/search' | '/anime/$animeid'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProfileRoute: typeof ProfileRoute
   SearchRoute: typeof SearchRoute
+  AnimeAnimeidRoute: typeof AnimeAnimeidRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/anime/$animeid': {
+      id: '/anime/$animeid'
+      path: '/anime/$animeid'
+      fullPath: '/anime/$animeid'
+      preLoaderRoute: typeof AnimeAnimeidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProfileRoute: ProfileRoute,
   SearchRoute: SearchRoute,
+  AnimeAnimeidRoute: AnimeAnimeidRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

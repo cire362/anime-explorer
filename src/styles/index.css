@@ -328,6 +328,144 @@ a {
   background: rgba(14, 24, 51, 0.75);
 }
 
+.search-page {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(122, 167, 255, 0.08),
+      transparent 28%
+    ),
+    rgba(14, 24, 51, 0.78);
+  box-shadow: var(--shadow);
+}
+
+.search-page__subtitle {
+  max-width: 700px;
+}
+
+.search-form {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid rgba(122, 167, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(9, 15, 31, 0.38);
+}
+
+.search-form__label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.search-form__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+
+.search-form__input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(11, 20, 44, 0.9);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.search-form__input::placeholder {
+  color: var(--muted);
+}
+
+.search-form__input:focus {
+  border-color: rgba(122, 167, 255, 0.6);
+  box-shadow: 0 0 0 4px rgba(122, 167, 255, 0.12);
+}
+
+.search-form__button {
+  min-width: 132px;
+}
+
+.search-toolbar {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.search-toolbar__result-count {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.search-toolbar__fetching {
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.search-empty-state {
+  margin-top: 24px;
+  padding: 28px;
+  border: 1px dashed rgba(122, 167, 255, 0.26);
+  border-radius: 16px;
+  background: rgba(9, 15, 31, 0.34);
+}
+
+.search-empty-state__title {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.search-empty-state__text {
+  margin: 0;
+  color: var(--muted);
+  max-width: 640px;
+}
+
+.search-state {
+  margin-top: 24px;
+}
+
+.search-pagination {
+  margin-top: 32px;
+}
+
+.search-pagination__current {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .search-page {
+    padding: 18px;
+  }
+
+  .search-form__controls {
+    grid-template-columns: 1fr;
+  }
+
+  .search-form__button {
+    width: 100%;
+  }
+
+  .search-toolbar,
+  .search-pagination {
+    flex-direction: column;
+  }
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
